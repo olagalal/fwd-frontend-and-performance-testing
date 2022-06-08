@@ -1,5 +1,11 @@
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/controller/Controller.java
 /Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/model/InvoiceHeader.java
 /Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/view/GUI.java
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/controller/InvoicesLineController.java
 /Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/view/Main.java
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/controller/InvoicesHeaderController.java
 /Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/model/InvoiceLine.java
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/controller/TablesController.java
 /Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/model/FileOperations.java
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/model/InvoicesHeaderTableModel.java
+/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/src/main/java/model/InvoicesLineTableModel.java

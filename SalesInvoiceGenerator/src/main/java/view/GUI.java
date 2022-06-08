@@ -9,12 +9,18 @@ package view;
  * @author Ola Galal
  */
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.FileOperations;
+import model.InvoiceHeader;
+import model.InvoicesHeaderTableModel;
+import model.InvoicesLineTableModel;
+import controller.*;
 
 public class GUI extends JFrame {
 
@@ -618,5 +624,58 @@ public class GUI extends JFrame {
         return accessibleContext;
     }
 
+    public static void setJOptionPaneMessagMessage(Component component, String message, String title, String messageType) {
+        int messageTypeInteger = 0;
+        switch (messageType) {
+            case "ERROR_MESSAGE" ->
+                messageTypeInteger = 0;
+            case "QUESTION_MESSAGE" ->
+                messageTypeInteger = 3;
+            case "WARNING_MESSAGE" ->
+                messageTypeInteger = 2;
+            case "INFORMATION_MESSAGE" ->
+                messageTypeInteger = 1;
+        }
+        JOptionPane.showMessageDialog(component, message, title, messageTypeInteger);
+    }
+
+    public int showYesNoCancelDialog(Component component, String message, String title) {
+        Object[] yesNoCancel = {"Yes", "No", "Cancel"};
+        return JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, yesNoCancel, yesNoCancel[0]);
+    }
+
+    public int showSaveDontSaveCancelDialog(Component component, String message, String title) {
+        Object[] saveDontSaveCancel = {"Save", "Don't Save", "Cancel"};
+        return JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, saveDontSaveCancel, saveDontSaveCancel[0]);
+    }
+
+    public void setLocations() {
+        CreatNewInvoiceDialog.setLocation(InvoiceTable.getLocationOnScreen().x + 50, InvoiceTable.getLocationOnScreen().y + 50);
+        AddItemDialog.setLocation(InvoicesLineTable.getLocationOnScreen().x + 100, InvoicesLineTable.getLocationOnScreen().y);
+    }
+
+    void loadFiles() throws FileNotFoundException {
+        Controller.isThereIsNotSavedEdit = false;
+
+        while (InvoicesHeaderTableModel.setInvoicesHeaderTableModel(this).getRowCount() > 0) {
+            InvoicesHeaderTableModel.setInvoicesHeaderTableModel(this).removeRow(0);
+        }
+
+        while (InvoicesLineTableModel.setInvoicesLineTableModel(this).getRowCount() > 0) {
+            InvoicesLineTableModel.setInvoicesLineTableModel(this).removeRow(0);
+        }
+
+        getInvoiceTotalLabel().setText("");
+
+        ArrayList<InvoiceHeader> invoices = new ArrayList<>();
+        Controller.invoices = fileOperations.readFile();
+
+        fileOperations.main(Controller.invoices);
+
+        InvoicesHeaderController.calculateInvoiceTableTotal(Controller.invoices);
+        TablesController.loadInvoicesHeaderTable(this, Controller.invoices);
+        fileOperations.getMaxNumberOfExistedInvoices(Controller.maxNumberOfExistedInvoices, Controller.invoices);
+
+    }
 
 }

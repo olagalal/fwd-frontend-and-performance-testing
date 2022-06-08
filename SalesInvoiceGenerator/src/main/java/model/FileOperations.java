@@ -12,7 +12,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import view.GUI;
-import controller.Controller;
 
 
 /**
@@ -210,7 +209,6 @@ public class FileOperations {
     }
 
     public void writeFile(ArrayList<InvoiceHeader> invoices) throws IOException {
-        Controller.isThereIsNotSavedEdit = false;
 
         int invoiceLinelines;
         int totalInvoiceLinelines = 0;
@@ -276,9 +274,4 @@ public class FileOperations {
         return returnElement;
     }
 
-    public void getMaxNumberOfExistedInvoices(int maxNumberOfExistedInvoices, ArrayList<InvoiceHeader> invoices) {
-        for (int i = 0; i < invoices.size(); i++)
-            if ((invoices.get(i).getInoviceNumber()) > Controller.maxNumberOfExistedInvoices)
-                Controller.maxNumberOfExistedInvoices = invoices.get(i).getInoviceNumber();
-    }
 }

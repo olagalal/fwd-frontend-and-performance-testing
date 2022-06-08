@@ -30,14 +30,95 @@ public class Controller implements ActionListener, KeyListener {
     public volatile static boolean isThereIsNotSavedEdit = false;
     public volatile static int maxNumberOfExistedInvoices = 0;
 
+    private InvoiceTableListener invoiceTableListener;
+    private InvoicesLineTableListener invoicesLineTableListener;
+    private FileMenuItemsListener fileMenuItemsListener;
+    private MainFrameWindowListener mainFrameWindowListener;
+    private MainFrameMouseMotionListener mainFrameMouseMotionListener;
+    private AddItemDialogWindowListener addItemDialogWindowListener;
+    private InvoiceDateTextFieldListener invoiceDateTextFieldListener;
+    private CustomerNameTextFieldListener customerNameTextFieldListener;
+
     public Controller(InvoiceHeader invoiceHeader, InvoiceLine invoiceLine, GUI gui) {
         this.invoiceHeader = invoiceHeader;
         this.invoiceLine = invoiceLine;
         this.gui = gui;
         fileOperations = new FileOperations(this.gui);
 
+        invoicesLineTableListener = new InvoicesLineTableListener(gui);
+        invoiceTableListener = new InvoiceTableListener(gui, fileOperations, invoicesLineTableListener);
+
+        fileMenuItemsListener = new FileMenuItemsListener(gui, fileOperations, invoiceTableListener);
+        mainFrameWindowListener = new MainFrameWindowListener(gui, fileOperations, invoiceTableListener);
+
+        addItemDialogWindowListener = new AddItemDialogWindowListener(gui);
+        mainFrameMouseMotionListener = new MainFrameMouseMotionListener(gui);
+
+        invoiceDateTextFieldListener = new InvoiceDateTextFieldListener(gui);
+        customerNameTextFieldListener = new CustomerNameTextFieldListener(gui);
+
+        turnOnAllActionListerners(gui);
+
         loadTablesContents = new TablesController();
         
+    }
+
+    private void turnOnAllActionListerners(GUI gui) {
+        gui.getLoadFile().addActionListener(fileMenuItemsListener);
+        gui.getLoadFile().setActionCommand("Load Files");
+
+        gui.getSaveFile().addActionListener(fileMenuItemsListener);
+        gui.getSaveFile().setActionCommand("Save File");
+
+        gui.getQuit().addActionListener(fileMenuItemsListener);
+        gui.getQuit().setActionCommand("Quit");
+
+        gui.getFileMenu().addMenuListener(fileMenuItemsListener);
+        gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
+        gui.getInvoicesLineTable().getSelectionModel().addListSelectionListener(invoicesLineTableListener);
+
+        gui.addWindowListener(mainFrameWindowListener);
+
+        GUI.getAddItemDialog().addWindowListener(addItemDialogWindowListener);
+
+        gui.getInvoiceDateTextField().addActionListener(invoiceDateTextFieldListener);
+        gui.getInvoiceDateTextField().addFocusListener(invoiceDateTextFieldListener);
+
+        gui.getCustomerNameTextField().addActionListener(customerNameTextFieldListener);
+        gui.getCustomerNameTextField().addFocusListener(customerNameTextFieldListener);
+
+        gui.getRootPane().addMouseMotionListener(mainFrameMouseMotionListener);
+
+        gui.getCreatNewInvoiceButton().addActionListener(this);
+        gui.getCreatNewInvoiceButton().setActionCommand("Creat New Invoice");
+
+        gui.getCreatNewInvoiceOK().addActionListener(this);
+        gui.getCreatNewInvoiceOK().setActionCommand("Creat New Invoice OK");
+
+        gui.getCreatNewInvoiceCancel().addActionListener(this);
+        gui.getCreatNewInvoiceCancel().setActionCommand("Creat New Invoice Cancel");
+
+        gui.getDeleteInvoiceButton().addActionListener(this);
+        gui.getDeleteInvoiceButton().setActionCommand("Delete Invoice");
+
+        gui.getAddItemButton().addActionListener(this);
+        gui.getAddItemButton().setActionCommand("Add Item");
+
+        gui.getCancelButton().addActionListener(this);
+        gui.getCancelButton().setActionCommand("Save Items");
+
+        gui.getNewItemPrice().addKeyListener(this);
+        gui.getAddItemDialogCancel().addActionListener(this);
+        gui.getAddItemDialogCancel().setActionCommand("Add Item Dialog Cancel");
+
+        gui.getAddItemDialogOK().addActionListener(this);
+        gui.getAddItemDialogOK().setActionCommand("Add Item Dialog OK");
+
+        gui.getDeleteItemButton().addActionListener(this);
+        gui.getDeleteItemButton().setActionCommand("Delete Item");
+
+        gui.getCancelButton().addActionListener(this);
+        gui.getCancelButton().setActionCommand("Cancel Any Changes");
     }
 
     /**
@@ -56,7 +137,9 @@ public class Controller implements ActionListener, KeyListener {
 
             case "Creat New Invoice OK" -> {
                 try {
+                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     InvoicesHeaderController.addNewInvoice(gui, invoices);
+                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
                     gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
                 } catch (ParseException ex) {
                     ex.printStackTrace();
@@ -70,7 +153,9 @@ public class Controller implements ActionListener, KeyListener {
 
             case "Delete Invoice" -> {
                 if (gui.getFocusOwner() != null) {
+                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     InvoicesHeaderController.deleteSelectedInvoice(gui, invoices);
+                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
 
                     gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
                 }
@@ -90,10 +175,12 @@ public class Controller implements ActionListener, KeyListener {
                 }
 
                 if (FileOperations.selectedInvoiceHeader != null && FileOperations.selectedInvoiceLine != null) {
+                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     Controller.invoices = fileOperations.readFile();
                     InvoicesHeaderController.calculateInvoiceTableTotal(Controller.invoices);
                     TablesController.loadInvoicesHeaderTable(gui, Controller.invoices);
                     Controller.isThereIsNotSavedEdit = false;
+                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
                     if (Controller.invoices.size() >= 1) {
                         gui.getInvoiceTable().setRowSelectionInterval(0, 0);
                     }
@@ -146,13 +233,16 @@ public class Controller implements ActionListener, KeyListener {
 
             case "Cancel Any Changes" -> {
                 if ((FileOperations.selectedInvoiceHeader != null) && (FileOperations.selectedInvoiceLine != null)) {
+                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     invoices = fileOperations.readFile();
                     InvoicesHeaderController.calculateInvoiceTableTotal(invoices);
                     TablesController.loadInvoicesHeaderTable(gui, invoices);
 
                     maxNumberOfExistedInvoices = 0;
+                    fileOperations.getMaxNumberOfExistedInvoices(maxNumberOfExistedInvoices, invoices);
 
                     isThereIsNotSavedEdit = false;
+                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
 
                     if (invoices.size() >= 1) {
                         gui.getInvoiceTable().setRowSelectionInterval(0, 0);

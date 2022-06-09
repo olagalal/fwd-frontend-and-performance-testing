@@ -42,8 +42,9 @@ public class InvoicesLineController {
         switch (choice) {
             case 0 -> {
                 try {
-                    if (!gui.getInvoiceDateTextField().getText().matches("^\\d{2}\\-\\d{2}\\-\\d{4}"))
+                    if (!gui.getInvoiceDateTextField().getText().matches("^\\d{2}\\-\\d{2}\\-\\d{4}")) {
                         throw new Exception();
+                    }
 
                     FileOperations.date.setLenient(false);
                     FileOperations.date.parse(gui.getInvoiceDateTextField().getText());
@@ -75,10 +76,11 @@ public class InvoicesLineController {
                 gui.getCustomerNameTextField().requestFocus();
                 Controller.isThereIsNotSavedEdit = true;
             }
-            case 1 -> gui.getCustomerNameTextField().requestFocus();
+            case 1 ->
+                gui.getCustomerNameTextField().requestFocus();
             default -> {
-                    gui.getCustomerNameTextField().setText(invoices.get(Controller.selectedRow).getInoviceCustomerName());
-                    gui.getCustomerNameTextField().requestFocus();
+                gui.getCustomerNameTextField().setText(invoices.get(Controller.selectedRow).getInoviceCustomerName());
+                gui.getCustomerNameTextField().requestFocus();
             }
         }
     }
@@ -87,8 +89,10 @@ public class InvoicesLineController {
         String itemName;
         float price = 0;
         int count = 0;
+
+        boolean flag = false;
         itemName = gui.getNewItemName().getText();
-        
+
         if (itemName.equalsIgnoreCase("")) {
             GUI.getAddItemDialog().setVisible(false);
             GUI.setJOptionPaneMessagMessage(gui.getInvoicesItemsPanel(), "Please enter a valid name", "Empty Item Name", "ERROR_MESSAGE");
@@ -98,17 +102,23 @@ public class InvoicesLineController {
             GUI.setJOptionPaneMessagMessage(gui.getInvoicesItemsPanel(), "Please enter a price", "Empty Price", "ERROR_MESSAGE");
             showNewItemDialog(gui);
         } else {
+            
             try {
                 price = Float.parseFloat(gui.getNewItemPrice().getText());
                 gui.getNewItemPriceSpinner().commitEdit();
                 count = (Integer) gui.getNewItemPriceSpinner().getValue();
             } catch (Exception e) {
+                flag = true;
+                e.printStackTrace();
+            }
+
+            if (!flag) {
                 InvoiceHeader temp = invoices.get(gui.getInvoiceTable().getSelectedRow());
                 InvoiceLine newItem = new InvoiceLine(itemName, price, count, temp);
                 temp.getInvoicerow().add(newItem);
                 Controller.isThereIsNotSavedEdit = true;
             }
-            
+
             gui.getNewItemName().setText("");
             gui.getNewItemPrice().setText("");
             gui.getNewItemPriceSpinner().setValue((Object) 1);

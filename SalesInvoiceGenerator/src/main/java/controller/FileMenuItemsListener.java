@@ -1,5 +1,6 @@
 package controller;
 
+import static controller.Controller.isThereIsNotSavedEdit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
                 }
                 if (Controller.isThereIsNotSavedEdit) {
                     gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
+
                 } else {
                     gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
                 }

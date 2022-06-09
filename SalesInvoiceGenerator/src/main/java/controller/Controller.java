@@ -140,6 +140,7 @@ public class Controller implements ActionListener, KeyListener {
                     gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     InvoicesHeaderController.addNewInvoice(gui, invoices);
                     gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
+                    
                     gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
                 } catch (ParseException ex) {
                     ex.printStackTrace();
@@ -187,6 +188,7 @@ public class Controller implements ActionListener, KeyListener {
                 }
                 if (Controller.isThereIsNotSavedEdit) {
                     gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
+
                 } else {
                     gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
                 }
@@ -204,6 +206,7 @@ public class Controller implements ActionListener, KeyListener {
                 GUI.getAddItemDialog().setVisible(false);
 
                 gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
+
             }
 
             case "Add Item Dialog Cancel" -> {
@@ -250,6 +253,7 @@ public class Controller implements ActionListener, KeyListener {
                 }
 
                 gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
+                
             }
         }
 

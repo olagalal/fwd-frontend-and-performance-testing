@@ -23,5 +23,4 @@ controller/MainFrameMouseMotionListener.class
 controller/AddItemDialogWindowListener.class
 model/InvoiceHeader.class
 view/GUI$1.class
-view/GUI$6.class
 controller/Controller.class

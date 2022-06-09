@@ -36,7 +36,6 @@ public class GUI extends JFrame {
         DeleteInvoiceButton.setEnabled(false);
         AddItemButton.setEnabled(false);
         DeleteItemButton.setEnabled(false);
-        SaveButton.setEnabled(false);
 
         chooser = new JFileChooser();
 
@@ -96,7 +95,6 @@ public class GUI extends JFrame {
         InvoicesLineTable = new javax.swing.JTable();
         DeleteItemButton = new javax.swing.JButton();
         AddItemButton = new javax.swing.JButton();
-        SaveButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
@@ -358,16 +356,6 @@ public class GUI extends JFrame {
         InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 40, -1));
         AddItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        SaveButton.setText("Save");
-        SaveButton.setEnabled(false);
-        SaveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButtonActionPerformed(evt);
-            }
-        });
-        InvoicesItemsPanel.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 570, 90, -1));
-        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
-
         CancelButton.setText("Cancel");
         CancelButton.setEnabled(false);
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -375,9 +363,7 @@ public class GUI extends JFrame {
                 CancelButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, 90, -1));
-        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
-
+        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 90, -1));
         getContentPane().add(InvoicesItemsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 620, 620));
 
         FileMenu.setText("File");
@@ -420,10 +406,6 @@ public class GUI extends JFrame {
     private void DeleteItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteItemButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DeleteItemButtonActionPerformed
-
-    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void LoadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadFileActionPerformed
         // TODO add your handling code here:
@@ -481,7 +463,6 @@ public class GUI extends JFrame {
     private javax.swing.JLabel NewItemPriceLabel;
     private javax.swing.JSpinner NewItemPriceSpinner;
     private javax.swing.JMenuItem Quit;
-    private javax.swing.JButton SaveButton;
     private javax.swing.JMenuItem SaveFile;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
@@ -512,10 +493,6 @@ public class GUI extends JFrame {
 
     public JButton getCancelButton() {
         return CancelButton;
-    }
-
-    public JButton getSaveButton() {
-        return SaveButton;
     }
 
     public JTextField getCustomerNameTextField() {

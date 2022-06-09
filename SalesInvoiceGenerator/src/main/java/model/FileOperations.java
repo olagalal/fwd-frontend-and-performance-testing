@@ -20,9 +20,9 @@ import controller.Controller;
  * @author Ola Galal
  */
 public class FileOperations {
-
-    public static File selectedInvoiceHeader = new File("/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/InvoiceHeader.csv");
-    public static File selectedInvoiceLine = new File("/Users/olagalal/NetBeansProjects/SalesInvoiceGenerator/InvoiceLine.csv");
+    
+    public static File selectedInvoiceHeader = new File(System.getProperty("user.dir")+"/InvoiceHeader.csv");
+    public static File selectedInvoiceLine = new File(System.getProperty("user.dir")+"/InvoiceLine.csv");
 
     public static SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private GUI gui;

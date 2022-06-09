@@ -16,6 +16,9 @@ public class Main {
         gui.setLocations();
         gui.setResizable(false);
         gui.loadFiles();
+        
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
 
         new Controller(new InvoiceHeader(), new InvoiceLine(), gui);
     }

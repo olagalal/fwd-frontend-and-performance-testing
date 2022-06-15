@@ -29,13 +29,13 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Load Files" ->  {
+            case "Load Files" -> {
                 Controller.isThereIsNotSavedEdit = false;
-                
+
                 while (InvoicesHeaderTableModel.setInvoicesHeaderTableModel(gui).getRowCount() > 0) {
                     InvoicesHeaderTableModel.setInvoicesHeaderTableModel(gui).removeRow(0);
                 }
-                
+
                 while (InvoicesLineTableModel.setInvoicesLineTableModel(gui).getRowCount() > 0) {
                     InvoicesLineTableModel.setInvoicesLineTableModel(gui).removeRow(0);
                 }
@@ -50,38 +50,21 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
                     fileOperations.getMaxNumberOfExistedInvoices(Controller.maxNumberOfExistedInvoices, Controller.invoices);
                 }
             }
-            case "Save File" ->  {
+            case "Save File" -> {
                 try {
                     fileOperations.writeFile(Controller.invoices);
+                    gui.loadFiles();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                
-                if (FileOperations.selectedInvoiceHeader != null && FileOperations.selectedInvoiceLine != null) {
-                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
-                    Controller.invoices = fileOperations.readFile();
-                    InvoicesHeaderController.calculateInvoiceTableTotal(Controller.invoices);
-                    TablesController.loadInvoicesHeaderTable(gui, Controller.invoices);
-                    Controller.isThereIsNotSavedEdit = false;
-                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
-                    if (Controller.invoices.size() >= 1) {
-                        gui.getInvoiceTable().setRowSelectionInterval(0, 0);
-                    }
-                }
-                if (Controller.isThereIsNotSavedEdit) {
-                    gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
-
-                } else {
-                    gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
-                }
             }
-            case "Quit" ->  {
+            case "Quit" -> {
                 System.exit(0);
             }
         }
     }
 
-    @Override 
+    @Override
     public void menuSelected(MenuEvent e) {
         if (Controller.isThereIsNotSavedEdit) {
             gui.getSaveFile().setEnabled(true);

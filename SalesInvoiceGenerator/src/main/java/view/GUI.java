@@ -631,7 +631,7 @@ public class GUI extends JFrame {
         AddItemDialog.setLocation(InvoicesLineTable.getLocationOnScreen().x + 100, InvoicesLineTable.getLocationOnScreen().y);
     }
 
-    void loadFiles() throws FileNotFoundException {
+    public void loadFiles() throws FileNotFoundException {
         Controller.isThereIsNotSavedEdit = false;
 
         while (InvoicesHeaderTableModel.setInvoicesHeaderTableModel(this).getRowCount() > 0) {

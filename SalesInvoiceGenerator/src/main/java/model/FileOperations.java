@@ -14,15 +14,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import view.GUI;
 import controller.Controller;
 
-
 /**
  *
  * @author Ola Galal
  */
 public class FileOperations {
-    
-    public static File selectedInvoiceHeader = new File(System.getProperty("user.dir")+"/InvoiceHeader.csv");
-    public static File selectedInvoiceLine = new File(System.getProperty("user.dir")+"/InvoiceLine.csv");
+
+    public static File selectedInvoiceHeader = new File(System.getProperty("user.dir") + "/InvoiceHeader.csv");
+    public static File selectedInvoiceLine = new File(System.getProperty("user.dir") + "/InvoiceLine.csv");
 
     public static SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private GUI gui;
@@ -164,7 +163,7 @@ public class FileOperations {
 //                System.out.println(inoviceLine);
 
                 while (inoviceLine != null) {
-                    
+
                     invoicesLine = inoviceLine.split(",");
                     if (invoicesLine.length != 4) {
                         throw new Exception("wrong csv format");
@@ -189,9 +188,9 @@ public class FileOperations {
                     temporary = findParentHeader(invoiceNumber, invoices);
                     line = new InvoiceLine(invoiceItemName, itemPrice, itemCount, temporary);
                     temporary.getInvoicerow().add(line);
-                    
+
                     inoviceLine = bufferReader.readLine();
-                    System.out.println(inoviceLine);
+//                    System.out.println(inoviceLine);
                 }
 
                 bufferReader.close();
@@ -210,6 +209,7 @@ public class FileOperations {
     }
 
     public void writeFile(ArrayList<InvoiceHeader> invoices) throws IOException {
+               
         Controller.isThereIsNotSavedEdit = false;
 
         int invoiceLinelines;
@@ -219,36 +219,40 @@ public class FileOperations {
 
         for (int i = 0; i < invoices.size(); i++) {
             String inoviceLine = invoices.get(i).getInoviceNumber() + "," + date.format(invoices.get(i).getInoviceDate()) + "," + invoices.get(i).getInoviceCustomerName();
-            if (i != invoices.size() - 1) inoviceLine += "\n";
+            if (i != invoices.size() - 1) {
+                inoviceLine += "\n";
+            }
             fileWriter.write(inoviceLine);
         }
-        
+
         fileWriter.close();
         fileWriter = new FileWriter(selectedInvoiceLine);
 
-        for (int i = 0; i < invoices.size(); i++)
+        for (int i = 0; i < invoices.size(); i++) {
             totalInvoiceLinelines += invoices.get(i).getInvoicerow().size();
-        
+        }
+                
         for (int i = 0; i < invoices.size(); i++) {
             invoiceLinelines = invoices.get(i).getInvoicerow().size();
-            
-            for (int j = 0; j < invoiceLinelines; j++) {
-                String inoviceLine = Integer.toString(invoices.get(i).getInvoicerow().get(j).getMainInvoice().getInoviceNumber()) + ",";
-                inoviceLine += invoices.get(i).getInvoicerow().get(j).getItemName() + ",";
-                inoviceLine += Float.toString(invoices.get(i).getInvoicerow().get(j).getItemPrice()) + ",";
-                inoviceLine += Integer.toString(invoices.get(i).getInvoicerow().get(j).getItemCount());
-                actualLine++;
 
-                if (totalInvoiceLinelines != actualLine) {
-                    inoviceLine += "\n";
-                } else {
-                    fileWriter.write(inoviceLine);
+            for (int j = 0; j < invoiceLinelines; j++) {
+                String newLine = Integer.toString(invoices.get(i).getInvoicerow().get(j).getMainInvoice().getInoviceNumber()) + ",";
+                newLine += invoices.get(i).getInvoicerow().get(j).getItemName() + ",";
+                newLine += Float.toString(invoices.get(i).getInvoicerow().get(j).getItemPrice()) + ",";
+                newLine += Integer.toString(invoices.get(i).getInvoicerow().get(j).getItemCount());
+                actualLine++;
+               
+                if (! (totalInvoiceLinelines == actualLine)) {
+                    newLine += "\n";
                 }
+                fileWriter.write(newLine);
+                
             }
         }
-        
+
         GUI.setJOptionPaneMessagMessage(gui, "New data is saved", "Saved", "INFORMATION_MESSAGE");
         fileWriter.close();
+        
     }
 
     public void main(ArrayList<InvoiceHeader> invoices) {
@@ -256,13 +260,14 @@ public class FileOperations {
             for (int i = 0; i < invoices.size(); i++) {
                 System.out.println("INVOICE " + invoices.get(i).getInoviceNumber() + " : ");
                 System.out.print(invoices.get(i).getInoviceDate() + ", " + invoices.get(i).getInoviceCustomerName());
-                
+                System.out.println("");
+
                 for (int j = 0; j < invoices.get(i).getInvoicerow().size(); j++) {
                     System.out.println(invoices.get(i).getInvoicerow().get(j).getItemName() + ", "
                             + invoices.get(i).getInvoicerow().get(j).getItemPrice() + ", "
                             + invoices.get(i).getInvoicerow().get(j).getItemCount());
                 }
-                
+
                 System.out.println("");
             }
         }
@@ -270,15 +275,19 @@ public class FileOperations {
 
     private InvoiceHeader findParentHeader(int invoiceNumber, ArrayList<InvoiceHeader> invoices) {
         InvoiceHeader returnElement = null;
-        for (int i = 0; i < invoices.size(); i++)
-            if (invoices.get(i).getInoviceNumber() == invoiceNumber)
+        for (int i = 0; i < invoices.size(); i++) {
+            if (invoices.get(i).getInoviceNumber() == invoiceNumber) {
                 returnElement = invoices.get(i);
+            }
+        }
         return returnElement;
     }
 
     public void getMaxNumberOfExistedInvoices(int maxNumberOfExistedInvoices, ArrayList<InvoiceHeader> invoices) {
-        for (int i = 0; i < invoices.size(); i++)
-            if ((invoices.get(i).getInoviceNumber()) > Controller.maxNumberOfExistedInvoices)
+        for (int i = 0; i < invoices.size(); i++) {
+            if ((invoices.get(i).getInoviceNumber()) > Controller.maxNumberOfExistedInvoices) {
                 Controller.maxNumberOfExistedInvoices = invoices.get(i).getInoviceNumber();
+            }
+        }
     }
 }

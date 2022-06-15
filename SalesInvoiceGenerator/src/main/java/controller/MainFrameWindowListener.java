@@ -17,10 +17,10 @@ public class MainFrameWindowListener implements WindowListener {
 
     private FileOperations fileOperations;
     private InvoiceTableListener invoiceTableListener;
-    private GUI view = null;
+    private GUI gui = null;
 
-    public MainFrameWindowListener(GUI view, FileOperations fileOperations, InvoiceTableListener invoiceTableListener) {
-        this.view = view;
+    public MainFrameWindowListener(GUI gui, FileOperations fileOperations, InvoiceTableListener invoiceTableListener) {
+        this.gui = gui;
         this.fileOperations = fileOperations;
         this.invoiceTableListener = invoiceTableListener;
     }
@@ -29,13 +29,13 @@ public class MainFrameWindowListener implements WindowListener {
     public void windowClosing(WindowEvent e) {
         int option;
         if (Controller.isThereIsNotSavedEdit) {
-            option = view.showSaveDontSaveCancelDialog(view, "Do You Want To Save Changes?", "Exit");
+            option = gui.showSaveDontSaveCancelDialog(gui, "Do You Want To Save Changes?", "Exit");
             if (option == 1) {
                 System.exit(0);
             } else if (option == 0) {
-                view.setVisible(false);
+                gui.setVisible(false);
                 try {
-                    saveFile();
+                    fileOperations.writeFile(Controller.invoices);
                 } catch (IOException ex) {
                     Logger.getLogger(MainFrameWindowListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -44,28 +44,6 @@ public class MainFrameWindowListener implements WindowListener {
             }
         } else {
             System.exit(0);
-        }
-    }
-
-    void saveFile() throws IOException {
-        //Write the invoices arraylist
-        fileOperations.writeFile(Controller.invoices);
-        //Reload CSV files into tables
-        if ((FileOperations.selectedInvoiceHeader != null) && (FileOperations.selectedInvoiceLine != null)) {
-            view.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
-            Controller.invoices = fileOperations.readFile();
-            InvoicesHeaderController.calculateInvoiceTableTotal(Controller.invoices);
-            TablesController.loadInvoicesHeaderTable(view, Controller.invoices);
-            Controller.isThereIsNotSavedEdit = false;
-            view.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
-            if (Controller.invoices.size() >= 1) {
-                view.getInvoiceTable().setRowSelectionInterval(0, 0);
-            }
-        }
-        if (Controller.isThereIsNotSavedEdit) {
-            view.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
-        } else {
-            view.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
         }
     }
 
@@ -89,22 +67,22 @@ public class MainFrameWindowListener implements WindowListener {
     @Override
     public void windowActivated(WindowEvent e) {
         if ((FileOperations.selectedInvoiceHeader != null) && (FileOperations.selectedInvoiceLine != null)) {
-            view.getCreatNewInvoiceButton().setEnabled(true);
+            gui.getCreatNewInvoiceButton().setEnabled(true);
         } else {
-            view.getCreatNewInvoiceButton().setEnabled(false);
-            view.getDeleteInvoiceButton().setEnabled(false);
-            view.getInvoiceTotalLabel().setText("");
+            gui.getCreatNewInvoiceButton().setEnabled(false);
+            gui.getDeleteInvoiceButton().setEnabled(false);
+            gui.getInvoiceTotalLabel().setText("");
         }
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
         if ((FileOperations.selectedInvoiceHeader != null) && (FileOperations.selectedInvoiceLine != null)) {
-            view.getCreatNewInvoiceButton().setEnabled(true);
+            gui.getCreatNewInvoiceButton().setEnabled(true);
         } else {
-            view.getCreatNewInvoiceButton().setEnabled(false);
-            view.getDeleteInvoiceButton().setEnabled(false);
-            view.getInvoiceTotalLabel().setText("");
+            gui.getCreatNewInvoiceButton().setEnabled(false);
+            gui.getDeleteInvoiceButton().setEnabled(false);
+            gui.getInvoiceTotalLabel().setText("");
         }
     }
 

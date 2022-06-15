@@ -167,33 +167,7 @@ public class Controller implements ActionListener, KeyListener {
                     InvoicesLineController.showNewItemDialog(gui);
                 }
             }
-
-            case "Save Items" -> {
-                try {
-                    fileOperations.writeFile(Controller.invoices);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                if (FileOperations.selectedInvoiceHeader != null && FileOperations.selectedInvoiceLine != null) {
-                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
-                    Controller.invoices = fileOperations.readFile();
-                    InvoicesHeaderController.calculateInvoiceTableTotal(Controller.invoices);
-                    TablesController.loadInvoicesHeaderTable(gui, Controller.invoices);
-                    Controller.isThereIsNotSavedEdit = false;
-                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
-                    if (Controller.invoices.size() >= 1) {
-                        gui.getInvoiceTable().setRowSelectionInterval(0, 0);
-                    }
-                }
-                if (Controller.isThereIsNotSavedEdit) {
-                    gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
-
-                } else {
-                    gui.getCancelButton().setEnabled(Controller.isThereIsNotSavedEdit);
-                }
-            }
-
+            
             case "Add Item Dialog OK" -> {
                 InvoicesLineController.addNewItem(gui, invoices);
                 InvoicesHeaderController.calculateInvoiceTableTotal(invoices);

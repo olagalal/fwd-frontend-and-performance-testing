@@ -19,7 +19,6 @@ public class AddItemDialogWindowListener implements WindowListener {
 
     @Override
     public void windowClosed(WindowEvent e) {
-        //clear all text field of add new item dialog and reset spinner
         view.getNewItemName().setText("");
         view.getNewItemPrice().setText("");
         view.getNewItemPriceSpinner().setValue((Object) 1);

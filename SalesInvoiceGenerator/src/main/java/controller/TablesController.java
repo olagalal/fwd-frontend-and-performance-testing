@@ -32,16 +32,10 @@ public class TablesController {
         int selectedRow = gui.getInvoiceTable().getSelectedRow();
 
         if (selectedRow == -1) {
-            InvoicesLineController.disable(gui);
-            
             while (InvoicesLineTableModel.setInvoicesLineTableModel(gui).getRowCount() > 0)
                 InvoicesLineTableModel.setInvoicesLineTableModel(gui).removeRow(0);
-            gui.getDeleteInvoiceButton().setEnabled(false);
         
         } else {
-            InvoicesLineController.enable(gui);
-            gui.getDeleteInvoiceButton().setEnabled(true);
-            
             while (InvoicesLineTableModel.setInvoicesLineTableModel(gui).getRowCount() > 0) {
                 InvoicesLineTableModel.setInvoicesLineTableModel(gui).removeRow(0);
             }

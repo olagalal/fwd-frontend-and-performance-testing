@@ -11,23 +11,6 @@ import view.GUI;
  */
 public class InvoicesLineController {
 
-    static void disable(GUI gui) {
-        gui.getInvoiceDateTextField().setText("");
-        gui.getCustomerNameTextField().setText("");
-        gui.getInvoiceTotalLabel().setText("");
-        gui.getInvoiceNumberLabel().setText("");
-        gui.getAddItemButton().setEnabled(false);
-        gui.getDeleteItemButton().setEnabled(false);
-        gui.getInvoiceDateTextField().setEditable(false);
-        gui.getCustomerNameTextField().setEditable(false);
-    }
-
-    static void enable(GUI gui) {
-        gui.getAddItemButton().setEnabled(true);
-        gui.getInvoiceDateTextField().setEditable(true);
-        gui.getCustomerNameTextField().setEditable(true);
-    }
-
     public static void updater(GUI gui, ArrayList<InvoiceHeader> invoices, int selectedRow) {
         if (selectedRow != -1) {
             gui.getInvoiceNumberLabel().setText(Integer.toString(invoices.get(selectedRow).getInoviceNumber()));
@@ -51,7 +34,6 @@ public class InvoicesLineController {
                     invoices.get(gui.getInvoiceTable().getSelectedRow()).setInoviceDate(gui.getDate().parse(gui.getInvoiceDateTextField().getText()));
                     InvoicesHeaderController.updateTableDate(gui, invoices);
                     gui.getInvoiceDateTextField().requestFocus();
-                    Controller.isThereIsNotSavedEdit = true;
                 } catch (Exception ex) {
                     GUI.setJOptionPaneMessagMessage(gui.getInvoicesItemsPanel(), "Please enter a valid date (e.g 06-06-2022)", "wrong date", "ERROR_MESSAGE");
                     gui.getInvoiceDateTextField().setText(gui.getDate().format(invoices.get(gui.getInvoiceTable().getSelectedRow()).getInoviceDate()));
@@ -74,7 +56,6 @@ public class InvoicesLineController {
                 invoices.get(gui.getInvoiceTable().getSelectedRow()).setInoviceCustomerName(gui.getCustomerNameTextField().getText());
                 InvoicesHeaderController.updateTableCustomerName(gui, invoices);
                 gui.getCustomerNameTextField().requestFocus();
-                Controller.isThereIsNotSavedEdit = true;
             }
             case 1 ->
                 gui.getCustomerNameTextField().requestFocus();
@@ -116,7 +97,6 @@ public class InvoicesLineController {
                 InvoiceHeader temp = invoices.get(gui.getInvoiceTable().getSelectedRow());
                 InvoiceLine newItem = new InvoiceLine(itemName, price, count, temp);
                 temp.getInvoicerow().add(newItem);
-                Controller.isThereIsNotSavedEdit = true;
             }
 
             gui.getNewItemName().setText("");
@@ -136,7 +116,6 @@ public class InvoicesLineController {
             int rowToBeDeleted;
             rowToBeDeleted = gui.getInvoicesLineTable().getSelectedRow();
             invoices.get(gui.getInvoiceTable().getSelectedRow()).getInvoicerow().remove(rowToBeDeleted);
-            Controller.isThereIsNotSavedEdit = true;
         }
     }
 }

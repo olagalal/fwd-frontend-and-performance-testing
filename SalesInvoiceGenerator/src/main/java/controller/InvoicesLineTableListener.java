@@ -19,13 +19,5 @@ public class InvoicesLineTableListener implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        //Dected the latest change
-        if (!e.getValueIsAdjusting()) {
-            if (view.getInvoicesLineTable().getSelectedRow() >= 0) {
-                view.getDeleteItemButton().setEnabled(true);
-            } else {
-                view.getDeleteItemButton().setEnabled(false);
-            }
-        }
     }
 }

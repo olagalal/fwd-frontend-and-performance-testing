@@ -32,13 +32,7 @@ public class GUI extends JFrame {
     public GUI() {
         initComponents();
 
-        CreatNewInvoiceButton.setEnabled(false);
-        DeleteInvoiceButton.setEnabled(false);
-        AddItemButton.setEnabled(false);
-        DeleteItemButton.setEnabled(false);
-
         chooser = new JFileChooser();
-
         FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
         chooser.setFileFilter(filter);
 
@@ -95,6 +89,7 @@ public class GUI extends JFrame {
         InvoicesLineTable = new javax.swing.JTable();
         DeleteItemButton = new javax.swing.JButton();
         AddItemButton = new javax.swing.JButton();
+        SaveButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
@@ -310,12 +305,12 @@ public class GUI extends JFrame {
         InvoicesItemsPanel.add(InvoicesItemsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 180, -1, -1));
         InvoicesItemsLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
-        InvoiceDateTextField.setEditable(false);
-        InvoicesItemsPanel.add(InvoiceDateTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 41, 131, -1));
+        InvoiceDateTextField.setEditable(true);
+        InvoicesItemsPanel.add(InvoiceDateTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 41, 390, -1));
         InvoiceDateTextField.setFont(new Font("Arial", Font.BOLD, 12));
 
-        CustomerNameTextField.setEditable(false);
-        InvoicesItemsPanel.add(CustomerNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 82, 131, -1));
+        CustomerNameTextField.setEditable(true);
+        InvoicesItemsPanel.add(CustomerNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 82, 390, -1));
         CustomerNameTextField.setFont(new Font("Arial", Font.BOLD, 12));
         InvoicesItemsPanel.add(InvoiceTotalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 123, -1, -1));
         InvoiceTotalLabel.setFont(new Font("Arial", Font.BOLD, 12));
@@ -338,32 +333,44 @@ public class GUI extends JFrame {
 
         InvoicesItemsPanel.add(InvoicesLineTableScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 203, 590, 350));
 
-        DeleteItemButton.setText("-");
+        DeleteItemButton.setText("Delete Item");
         DeleteItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 40, -1));
+        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 100, -1));
         DeleteItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        AddItemButton.setText("+");
+        AddItemButton.setText("Add Item");
         AddItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 40, -1));
+        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 90, -1));
         AddItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
+        SaveButton.setText("Save");
+        SaveButton.setEnabled(true);
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveButtonActionPerformed(evt);
+            }
+        });
+        InvoicesItemsPanel.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 570, 90, -1));
+        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
+
         CancelButton.setText("Cancel");
-        CancelButton.setEnabled(false);
+        CancelButton.setEnabled(true);
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 90, -1));
+        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, 90, -1));
+        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
+
         getContentPane().add(InvoicesItemsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 620, 620));
 
         FileMenu.setText("File");
@@ -415,6 +422,10 @@ public class GUI extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_QuitActionPerformed
 
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveButtonActionPerformed
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CancelButtonActionPerformed
@@ -463,6 +474,7 @@ public class GUI extends JFrame {
     private javax.swing.JLabel NewItemPriceLabel;
     private javax.swing.JSpinner NewItemPriceSpinner;
     private javax.swing.JMenuItem Quit;
+    private javax.swing.JButton SaveButton;
     private javax.swing.JMenuItem SaveFile;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
@@ -493,6 +505,10 @@ public class GUI extends JFrame {
 
     public JButton getCancelButton() {
         return CancelButton;
+    }
+    
+    public JButton getSaveButton() {
+        return SaveButton;
     }
 
     public JTextField getCustomerNameTextField() {
@@ -632,8 +648,6 @@ public class GUI extends JFrame {
     }
 
     public void loadFiles() throws FileNotFoundException {
-        Controller.isThereIsNotSavedEdit = false;
-
         while (InvoicesHeaderTableModel.setInvoicesHeaderTableModel(this).getRowCount() > 0) {
             InvoicesHeaderTableModel.setInvoicesHeaderTableModel(this).removeRow(0);
         }

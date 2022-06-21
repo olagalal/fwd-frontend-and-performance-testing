@@ -1,11 +1,8 @@
 package controller;
 
-import static controller.Controller.isThereIsNotSavedEdit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import model.*;
 import view.GUI;
@@ -14,7 +11,7 @@ import view.GUI;
  *
  * @author Ola Galal
  */
-public class FileMenuItemsListener implements ActionListener, MenuListener {
+public class FileMenuItemsListener implements ActionListener{
 
     private FileOperations fileOperations;
     private InvoiceTableListener invoiceTableListener;
@@ -30,8 +27,6 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Load Files" -> {
-                Controller.isThereIsNotSavedEdit = false;
-
                 while (InvoicesHeaderTableModel.setInvoicesHeaderTableModel(gui).getRowCount() > 0) {
                     InvoicesHeaderTableModel.setInvoicesHeaderTableModel(gui).removeRow(0);
                 }
@@ -53,7 +48,6 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
             case "Save File" -> {
                 try {
                     fileOperations.writeFile(Controller.invoices);
-                    gui.loadFiles();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -62,23 +56,6 @@ public class FileMenuItemsListener implements ActionListener, MenuListener {
                 System.exit(0);
             }
         }
-    }
-
-    @Override
-    public void menuSelected(MenuEvent e) {
-        if (Controller.isThereIsNotSavedEdit) {
-            gui.getSaveFile().setEnabled(true);
-        } else {
-            gui.getSaveFile().setEnabled(false);
-        }
-    }
-
-    @Override
-    public void menuDeselected(MenuEvent e) {
-    }
-
-    @Override
-    public void menuCanceled(MenuEvent e) {
     }
 
 }

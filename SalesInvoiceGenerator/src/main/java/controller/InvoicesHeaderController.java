@@ -2,7 +2,8 @@ package controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.*;
 import view.GUI;
@@ -31,31 +32,36 @@ public class InvoicesHeaderController {
     }
 
     static void showCreatNewInvoiceDialog(GUI gui) {
-        Date invDate = new Date();
         gui.setLocations();
-        gui.getNewInvoiceDateField().setText(gui.getDate().format(invDate));
+        gui.getNewInvoiceDateField().setText("");
         GUI.getNewInvoiceDialog().setVisible(true);
     }
 
-    static void addNewInvoice(GUI gui, ArrayList<InvoiceHeader> invoices) throws ParseException {
+    static void addNewInvoice(GUI gui, ArrayList<InvoiceHeader> invoices) {
         if (gui.getNewCustomerName().getText().equalsIgnoreCase("")) {
             GUI.getNewInvoiceDialog().setModal(false);
             GUI.setJOptionPaneMessagMessage(gui.getInvoicesTablePanel(), "Please Enter A Name For The Customer", "Empty Name Entered", "ERROR_MESSAGE");
             GUI.getNewInvoiceDialog().setModal(true);
             showCreatNewInvoiceDialog(gui);
         } else {
-            Controller.maxNumberOfExistedInvoices++;
-            Controller.isThereIsNotSavedEdit = true;
+            try {
+                Controller.maxNumberOfExistedInvoices++;
 
-            InvoiceHeader newRow = new InvoiceHeader((Controller.maxNumberOfExistedInvoices), (gui.getDate().parse(gui.getNewInvoiceDateField().getText())), (gui.getNewCustomerName().getText()));
-            invoices.add(newRow);
-            TablesController.loadInvoicesHeaderTable(gui, invoices);
-            GUI.getNewInvoiceDialog().setVisible(false);
-            gui.getInvoiceTable().setRowSelectionInterval((invoices.size() - 1), (invoices.size() - 1));
-            gui.getNewCustomerName().setText("");
-            gui.getNewInvoiceDateField().setText("");
-            InvoicesLineController.updater(gui, invoices, invoices.size() - 1);
-            TablesController.loadInvoicesLineTable(gui, invoices);
+                InvoiceHeader newRow = new InvoiceHeader((Controller.maxNumberOfExistedInvoices), (gui.getDate().parse(gui.getNewInvoiceDateField().getText())), (gui.getNewCustomerName().getText()));
+                invoices.add(newRow);
+                TablesController.loadInvoicesHeaderTable(gui, invoices);
+                GUI.getNewInvoiceDialog().setVisible(false);
+                gui.getInvoiceTable().setRowSelectionInterval((invoices.size() - 1), (invoices.size() - 1));
+                gui.getNewCustomerName().setText("");
+                gui.getNewInvoiceDateField().setText("");
+                InvoicesLineController.updater(gui, invoices, invoices.size() - 1);
+                TablesController.loadInvoicesLineTable(gui, invoices);
+            } catch (ParseException ex) {
+                GUI.getNewInvoiceDialog().setModal(false);
+                GUI.setJOptionPaneMessagMessage(gui.getInvoicesTablePanel(), "Please Enter A Valid Date", "Invalid Date Entered", "ERROR_MESSAGE");
+                GUI.getNewInvoiceDialog().setModal(true);
+                showCreatNewInvoiceDialog(gui);
+            }
 
         }
     }
@@ -66,7 +72,6 @@ public class InvoicesHeaderController {
         if (invoiceToBeDeleted == -1) {
             GUI.setJOptionPaneMessagMessage(gui.getInvoicesTablePanel(), "Select Invoice Row First", "Error", "ERROR_MESSAGE");
         } else {
-            Controller.isThereIsNotSavedEdit = true;
             invoices.remove(invoiceToBeDeleted);
             TablesController.loadInvoicesHeaderTable(gui, invoices);
             if (!invoices.isEmpty()) {
@@ -74,9 +79,6 @@ public class InvoicesHeaderController {
                 InvoicesLineController.updater(gui, invoices, invoices.size() - 1);
                 TablesController.loadInvoicesLineTable(gui, invoices);
             } else {
-                gui.getDeleteInvoiceButton().setEnabled(false);
-                InvoicesLineController.disable(gui);
-
                 while (InvoicesLineTableModel.setInvoicesLineTableModel(gui).getRowCount() > 0) {
                     InvoicesLineTableModel.setInvoicesLineTableModel(gui).removeRow(0);
                 }

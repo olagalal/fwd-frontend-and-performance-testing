@@ -150,7 +150,6 @@ public class FileOperations {
             selectedInvoiceLine = null;
 
             invoices.clear();
-            gui.getCreatNewInvoiceButton().setEnabled(false);
 
             GUI.setJOptionPaneMessagMessage(gui, "wrong csv format", "Error", "ERROR_MESSAGE");
         }
@@ -160,7 +159,6 @@ public class FileOperations {
                 FileReader file = new FileReader(selectedInvoiceLine);
                 BufferedReader bufferReader = new BufferedReader(file);
                 inoviceLine = bufferReader.readLine();
-//                System.out.println(inoviceLine);
 
                 while (inoviceLine != null) {
 
@@ -190,7 +188,6 @@ public class FileOperations {
                     temporary.getInvoicerow().add(line);
 
                     inoviceLine = bufferReader.readLine();
-//                    System.out.println(inoviceLine);
                 }
 
                 bufferReader.close();
@@ -201,8 +198,6 @@ public class FileOperations {
             selectedInvoiceLine = null;
 
             invoices.clear();
-            gui.getCreatNewInvoiceButton().setEnabled(false);
-
             GUI.setJOptionPaneMessagMessage(gui, "wrong csv format", "Error", "ERROR_MESSAGE");
         }
         return invoices;
@@ -210,8 +205,6 @@ public class FileOperations {
 
     public void writeFile(ArrayList<InvoiceHeader> invoices) throws IOException {
                
-        Controller.isThereIsNotSavedEdit = false;
-
         int invoiceLinelines;
         int totalInvoiceLinelines = 0;
         int actualLine = 0;

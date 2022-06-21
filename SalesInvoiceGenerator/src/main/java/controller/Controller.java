@@ -27,14 +27,12 @@ public class Controller implements ActionListener, KeyListener {
 
     public volatile static ArrayList<InvoiceHeader> invoices = new ArrayList<>();
     public volatile static int selectedRow = 0;
-    public volatile static boolean isThereIsNotSavedEdit = false;
     public volatile static int maxNumberOfExistedInvoices = 0;
 
     private InvoiceTableListener invoiceTableListener;
     private InvoicesLineTableListener invoicesLineTableListener;
     private FileMenuItemsListener fileMenuItemsListener;
     private MainFrameWindowListener mainFrameWindowListener;
-    private MainFrameMouseMotionListener mainFrameMouseMotionListener;
     private AddItemDialogWindowListener addItemDialogWindowListener;
     private InvoiceDateTextFieldListener invoiceDateTextFieldListener;
     private CustomerNameTextFieldListener customerNameTextFieldListener;
@@ -52,7 +50,6 @@ public class Controller implements ActionListener, KeyListener {
         mainFrameWindowListener = new MainFrameWindowListener(gui, fileOperations, invoiceTableListener);
 
         addItemDialogWindowListener = new AddItemDialogWindowListener(gui);
-        mainFrameMouseMotionListener = new MainFrameMouseMotionListener(gui);
 
         invoiceDateTextFieldListener = new InvoiceDateTextFieldListener(gui);
         customerNameTextFieldListener = new CustomerNameTextFieldListener(gui);
@@ -73,7 +70,6 @@ public class Controller implements ActionListener, KeyListener {
         gui.getQuit().addActionListener(fileMenuItemsListener);
         gui.getQuit().setActionCommand("Quit");
 
-        gui.getFileMenu().addMenuListener(fileMenuItemsListener);
         gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
         gui.getInvoicesLineTable().getSelectionModel().addListSelectionListener(invoicesLineTableListener);
 
@@ -86,8 +82,6 @@ public class Controller implements ActionListener, KeyListener {
 
         gui.getCustomerNameTextField().addActionListener(customerNameTextFieldListener);
         gui.getCustomerNameTextField().addFocusListener(customerNameTextFieldListener);
-
-        gui.getRootPane().addMouseMotionListener(mainFrameMouseMotionListener);
 
         gui.getCreatNewInvoiceButton().addActionListener(this);
         gui.getCreatNewInvoiceButton().setActionCommand("Creat New Invoice");
@@ -104,10 +98,11 @@ public class Controller implements ActionListener, KeyListener {
         gui.getAddItemButton().addActionListener(this);
         gui.getAddItemButton().setActionCommand("Add Item");
 
-        gui.getCancelButton().addActionListener(this);
-        gui.getCancelButton().setActionCommand("Save Items");
+        gui.getSaveButton().addActionListener(this);
+        gui.getSaveButton().setActionCommand("Save Items");
 
         gui.getNewItemPrice().addKeyListener(this);
+        
         gui.getAddItemDialogCancel().addActionListener(this);
         gui.getAddItemDialogCancel().setActionCommand("Add Item Dialog Cancel");
 
@@ -136,16 +131,11 @@ public class Controller implements ActionListener, KeyListener {
             }
 
             case "Creat New Invoice OK" -> {
-                try {
-                    gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
-                    InvoicesHeaderController.addNewInvoice(gui, invoices);
-                    gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
-                    
-                    gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
+                gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
+                InvoicesHeaderController.addNewInvoice(gui, invoices);
+                gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
             }
+
 
             case "Creat New Invoice Cancel" -> {
                 gui.getNewCustomerName().setText("");
@@ -157,8 +147,6 @@ public class Controller implements ActionListener, KeyListener {
                     gui.getInvoiceTable().getSelectionModel().removeListSelectionListener(invoiceTableListener);
                     InvoicesHeaderController.deleteSelectedInvoice(gui, invoices);
                     gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
-
-                    gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
                 }
             }
 
@@ -178,9 +166,6 @@ public class Controller implements ActionListener, KeyListener {
                 int sizeOfinvoicesLinesForTheSelectedInvoice = invoices.get(gui.getInvoiceTable().getSelectedRow()).getInvoicerow().size();
                 gui.getInvoicesLineTable().setRowSelectionInterval((sizeOfinvoicesLinesForTheSelectedInvoice - 1), (sizeOfinvoicesLinesForTheSelectedInvoice - 1));
                 GUI.getAddItemDialog().setVisible(false);
-
-                gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
-
             }
 
             case "Add Item Dialog Cancel" -> {
@@ -203,8 +188,6 @@ public class Controller implements ActionListener, KeyListener {
                     if (sizeOfinvoicesLinesForTheSelectedInvoice > 0) {
                         gui.getInvoicesLineTable().setRowSelectionInterval((sizeOfinvoicesLinesForTheSelectedInvoice - 1), (sizeOfinvoicesLinesForTheSelectedInvoice - 1));
                     }
-
-                    gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
                 }
             }
 
@@ -217,17 +200,20 @@ public class Controller implements ActionListener, KeyListener {
 
                     maxNumberOfExistedInvoices = 0;
                     fileOperations.getMaxNumberOfExistedInvoices(maxNumberOfExistedInvoices, invoices);
-
-                    isThereIsNotSavedEdit = false;
                     gui.getInvoiceTable().getSelectionModel().addListSelectionListener(invoiceTableListener);
 
                     if (invoices.size() >= 1) {
                         gui.getInvoiceTable().setRowSelectionInterval(0, 0);
                     }
                 }
-
-                gui.getCancelButton().setEnabled(isThereIsNotSavedEdit);
-                
+            }
+            
+            case "Save Items" -> {
+                 try {
+                    fileOperations.writeFile(Controller.invoices);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
 

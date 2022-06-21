@@ -19,8 +19,8 @@ view/GUI$4.class
 model/InvoicesLineTableModel$1.class
 model/InvoicesHeaderTableModel.class
 model/InvoicesHeaderTableModel$1.class
-controller/MainFrameMouseMotionListener.class
 controller/AddItemDialogWindowListener.class
 model/InvoiceHeader.class
 view/GUI$1.class
+view/GUI$6.class
 controller/Controller.class

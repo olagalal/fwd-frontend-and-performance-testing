@@ -110,8 +110,6 @@ public class GUI extends JFrame {
 
         NewCustomerNameLabel.setText("Customer Name:");
 
-        NewInvoiceDateField.setEditable(false);
-
         NewInvoiceDateLabel.setText("Invoice Date:");
 
         CreatNewInvoiceOK.setText("OK");

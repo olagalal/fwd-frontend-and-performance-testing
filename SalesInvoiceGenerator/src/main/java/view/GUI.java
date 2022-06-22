@@ -333,42 +333,42 @@ public class GUI extends JFrame {
 
         InvoicesItemsPanel.add(InvoicesLineTableScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 203, 590, 350));
 
-        DeleteItemButton.setText("Delete Item");
+        DeleteItemButton.setText("Delete Invoice Line");
         DeleteItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 100, -1));
+        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 570, 140, -1));
         DeleteItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        AddItemButton.setText("Add Item");
+        AddItemButton.setText("Add Invoice Line");
         AddItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 90, -1));
+        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
         AddItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        SaveButton.setText("Save");
+        SaveButton.setText("Save Changes to File");
         SaveButton.setEnabled(true);
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 570, 90, -1));
+        InvoicesItemsPanel.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 570, 160, -1));
         SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        CancelButton.setText("Cancel");
+        CancelButton.setText("Discard Changes");
         CancelButton.setEnabled(true);
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, 90, -1));
+        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 570, -1, -1));
         SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
 
         getContentPane().add(InvoicesItemsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 620, 620));
@@ -386,7 +386,12 @@ public class GUI extends JFrame {
 
         SaveFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         SaveFile.setText("Save");
-        SaveFile.setEnabled(false);
+        SaveFile.setEnabled(true);
+        SaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveFileActionPerformed(evt);
+            }
+        });
         FileMenu.add(SaveFile);
         FileMenu.add(jSeparator1);
 
@@ -429,6 +434,10 @@ public class GUI extends JFrame {
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CancelButtonActionPerformed
+
+    private void SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveFileActionPerformed
     /**
      * @param args the command line arguments
      */

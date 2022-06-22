@@ -252,7 +252,13 @@ public class FileOperations {
         if (selectedInvoiceHeader != null && selectedInvoiceLine != null) {
             for (int i = 0; i < invoices.size(); i++) {
                 System.out.println("INVOICE " + invoices.get(i).getInoviceNumber() + " : ");
-                System.out.print(invoices.get(i).getInoviceDate() + ", " + invoices.get(i).getInoviceCustomerName());
+                
+                String pattern = "MM-dd-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(invoices.get(i).getInoviceDate());
+                
+                
+                System.out.print(date + ", " + invoices.get(i).getInoviceCustomerName());
                 System.out.println("");
 
                 for (int j = 0; j < invoices.get(i).getInvoicerow().size(); j++) {

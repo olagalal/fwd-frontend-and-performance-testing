@@ -1,5 +1,6 @@
 package controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import model.*;
@@ -19,7 +20,12 @@ public class TablesController {
         Object data[] = new Object[4];
         for (int i = 0; i < invoices.size(); i++) {
             data[0] = invoices.get(i).getInoviceNumber();
-            data[1] = invoices.get(i).getInoviceDate();
+            
+            String pattern = "MM-dd-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(invoices.get(i).getInoviceDate());
+            
+            data[1] = date;
             data[2] = invoices.get(i).getInoviceCustomerName();
             data[3] = invoices.get(i).getInoviceTotal();
             InvoicesHeaderTableModel.setInvoicesHeaderTableModel(gui).addRow(data);

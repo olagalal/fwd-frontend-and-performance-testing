@@ -42,6 +42,8 @@ public class GUI extends JFrame {
         InvoiceDateTextField.setName("InvoiceDateTextField");
         InvoicesLineTable.setName("InvoicesLineTable");
         InvoiceTable.setName("InvoiceTable");
+        
+        NewInvoiceDateField.setEditable(true);
     }
 
     /**
@@ -254,7 +256,6 @@ public class GUI extends JFrame {
 
         CreatNewInvoiceButton.setText("Creat New Invoice");
         InvoicesTablePanel.add(CreatNewInvoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 570, -1, -1));
-        CreatNewInvoiceButton.setFont(new Font("Arial", Font.BOLD, 12));
 
         DeleteInvoiceButton.setText("Delete Invoice");
         InvoicesTablePanel.add(DeleteInvoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 570, -1, -1));

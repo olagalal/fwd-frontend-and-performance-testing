@@ -373,9 +373,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Creat New Invoice"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="CreatNewInvoiceButton.setFont(new Font(&quot;Arial&quot;, Font.BOLD, 12));"/>
-          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="130" y="570" width="-1" height="-1"/>

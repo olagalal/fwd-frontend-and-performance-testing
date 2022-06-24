@@ -42,8 +42,6 @@ public class GUI extends JFrame {
         InvoiceDateTextField.setName("InvoiceDateTextField");
         InvoicesLineTable.setName("InvoicesLineTable");
         InvoiceTable.setName("InvoiceTable");
-        
-        NewInvoiceDateField.setEditable(true);
     }
 
     /**
@@ -91,8 +89,6 @@ public class GUI extends JFrame {
         InvoicesLineTable = new javax.swing.JTable();
         DeleteItemButton = new javax.swing.JButton();
         AddItemButton = new javax.swing.JButton();
-        SaveButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         LoadFile = new javax.swing.JMenuItem();
@@ -111,6 +107,8 @@ public class GUI extends JFrame {
         //CreatNewInvoiceDialog.setLocationRelativeTo(InvoiceTable);
 
         NewCustomerNameLabel.setText("Customer Name:");
+
+        NewInvoiceDateField.setEditable(true);
 
         NewInvoiceDateLabel.setText("Invoice Date:");
 
@@ -332,13 +330,13 @@ public class GUI extends JFrame {
 
         InvoicesItemsPanel.add(InvoicesLineTableScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 203, 590, 350));
 
-        DeleteItemButton.setText("Delete Invoice Line");
+        DeleteItemButton.setText("Delete Invoice Item");
         DeleteItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 570, 140, -1));
+        InvoicesItemsPanel.add(DeleteItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 150, -1));
         DeleteItemButton.setFont(new Font("Arial", Font.BOLD, 12));
 
         AddItemButton.setText("Add Invoice Line");
@@ -347,28 +345,8 @@ public class GUI extends JFrame {
                 AddItemButtonActionPerformed(evt);
             }
         });
-        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
+        InvoicesItemsPanel.add(AddItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, -1, -1));
         AddItemButton.setFont(new Font("Arial", Font.BOLD, 12));
-
-        SaveButton.setText("Save Changes to File");
-        SaveButton.setEnabled(true);
-        SaveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButtonActionPerformed(evt);
-            }
-        });
-        InvoicesItemsPanel.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 570, 160, -1));
-        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
-
-        CancelButton.setText("Discard Changes");
-        CancelButton.setEnabled(true);
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
-        InvoicesItemsPanel.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 570, -1, -1));
-        SaveButton.setFont(new Font("Arial", Font.BOLD, 12));
 
         getContentPane().add(InvoicesItemsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 620, 620));
 
@@ -426,14 +404,6 @@ public class GUI extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_QuitActionPerformed
 
-    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SaveButtonActionPerformed
-
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CancelButtonActionPerformed
-
     private void SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveFileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SaveFileActionPerformed
@@ -445,7 +415,6 @@ public class GUI extends JFrame {
     private static javax.swing.JDialog AddItemDialog;
     private javax.swing.JButton AddItemDialogCancel;
     public javax.swing.JButton AddItemDialogOK;
-    private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreatNewInvoiceButton;
     private javax.swing.JButton CreatNewInvoiceCancel;
     private static javax.swing.JDialog CreatNewInvoiceDialog;
@@ -482,7 +451,6 @@ public class GUI extends JFrame {
     private javax.swing.JLabel NewItemPriceLabel;
     private javax.swing.JSpinner NewItemPriceSpinner;
     private javax.swing.JMenuItem Quit;
-    private javax.swing.JButton SaveButton;
     private javax.swing.JMenuItem SaveFile;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
@@ -509,14 +477,6 @@ public class GUI extends JFrame {
 
     public JButton getAddItemButton() {
         return AddItemButton;
-    }
-
-    public JButton getCancelButton() {
-        return CancelButton;
-    }
-    
-    public JButton getSaveButton() {
-        return SaveButton;
     }
 
     public JTextField getCustomerNameTextField() {

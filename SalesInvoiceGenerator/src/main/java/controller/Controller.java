@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.text.ParseException;
 
 import model.FileOperations;
 import model.InvoiceHeader;
@@ -98,9 +97,6 @@ public class Controller implements ActionListener, KeyListener {
         gui.getAddItemButton().addActionListener(this);
         gui.getAddItemButton().setActionCommand("Add Item");
 
-        gui.getSaveButton().addActionListener(this);
-        gui.getSaveButton().setActionCommand("Save Items");
-
         gui.getNewItemPrice().addKeyListener(this);
         
         gui.getAddItemDialogCancel().addActionListener(this);
@@ -112,8 +108,6 @@ public class Controller implements ActionListener, KeyListener {
         gui.getDeleteItemButton().addActionListener(this);
         gui.getDeleteItemButton().setActionCommand("Delete Item");
 
-        gui.getCancelButton().addActionListener(this);
-        gui.getCancelButton().setActionCommand("Cancel Any Changes");
     }
 
     /**

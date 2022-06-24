@@ -8,7 +8,6 @@ controller/FileMenuItemsListener.class
 controller/InvoiceTableListener.class
 controller/CustomerNameTextFieldListener.class
 view/GUI$2.class
-view/GUI$7.class
 view/GUI.class
 model/InvoicesLineTableModel.class
 model/FileOperations.class
@@ -23,5 +22,4 @@ model/InvoicesHeaderTableModel$1.class
 controller/AddItemDialogWindowListener.class
 model/InvoiceHeader.class
 view/GUI$1.class
-view/GUI$6.class
 controller/Controller.class

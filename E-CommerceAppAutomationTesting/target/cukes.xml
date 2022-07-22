@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="12" time="234.02">
+<testcase classname="SC1- User could register with valid data" name="SC1- User could register with valid data" time="9.341">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on register link...........................................passed
+When user selected gender...................................................passed
+And user entered first name.................................................passed
+And user entered last name..................................................passed
+And user selected birth of date.............................................passed
+And user entered email for registration.....................................passed
+And user entered company name...............................................passed
+And user entered password for registration..................................passed
+And user confirmed password for registration................................passed
+And user clicked on register button.........................................passed
+Then user should have a success message for registration....................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC2- User could log in with valid email and password" name="SC2- User could log in with valid email and password" time="9.824">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+Then user should have a success message for login...........................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC3- User could reset his/her password successfully" name="SC3- User could reset his/her password successfully" time="8.846">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user clicked on forgot password.........................................passed
+And user entered email for reset password...................................passed
+And user clicked on recover button..........................................passed
+Then user should have a success message for recover.........................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC4- Logged User could search for any product" name="SC4- Logged User could search for any product" time="14.286">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user enter name of item to search for...................................passed
+And user clicked on search button...........................................passed
+Then user should have products contains the searched word...................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC5- Logged User could switch between currencies US-Euro" name="SC5- Logged User could switch between currencies US-Euro" time="10.772">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user change currency from usd to euro...................................passed
+Then all products shown are in euro.........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC6- Logged user could select different Categories" name="SC6- Logged user could select different Categories" time="16.616">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user hover on electronic category.......................................passed
+And user click on cellPhone category........................................passed
+Then cell phones page should appear to the user.............................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC7- Logged user could filter with color" name="SC7- Logged user could filter with red color" time="10.856">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user hover on apparel category..........................................passed
+And user click on shoes category............................................passed
+And user change color to red................................................passed
+Then shoes with red color only should appear to the user....................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC8- Logged user could select different tags" name="SC8- Logged user could select awesome tag" time="12.411">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user open search page...................................................passed
+And user choose awesome tag.................................................passed
+Then awesome products page should appear to the user........................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC9- Logged user could add different products to Shopping cart" name="SC9- Logged user could add different products to Shopping cart" time="33.568">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user navigate to books pages............................................passed
+And user add items to shopping cart.........................................passed
+And user navigate to shopping cart..........................................passed
+Then added items should appear at shopping cart.............................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC10- Logged user could add different products to Wishlist" name="SC10- Logged user could add different products to Wishlist" time="34.104">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user navigate to books pages............................................passed
+And user add items to wish list.............................................passed
+And user navigate to wish list..............................................passed
+Then added items should appear at wish list.................................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC11- Logged user could add different products to compare list" name="SC11- Logged user could add different products to compare list" time="31.297">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user navigate to books pages............................................passed
+And user add items to compare list..........................................passed
+And user navigate to compare list...........................................passed
+Then added items should appear at compare list..............................passed
+]]></system-out>
+</testcase>
+<testcase classname="SC12- Create successful Order" name="SC12- Create successful Order" time="41.802">
+<system-out><![CDATA[Given user navigate to home page............................................passed
+And user clicked on login link..............................................passed
+And user entered email for login............................................passed
+And user entered password for login.........................................passed
+And user clicked on login button............................................passed
+And user navigate to books pages............................................passed
+And user add items to shopping cart.........................................passed
+And user navigate to shopping cart..........................................passed
+And user complete order.....................................................passed
+Then order placed successfully..............................................passed
+]]></system-out>
+</testcase>
+</testsuite>

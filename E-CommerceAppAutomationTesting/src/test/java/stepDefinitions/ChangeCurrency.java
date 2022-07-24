@@ -23,7 +23,10 @@ public class ChangeCurrency {
     @Then("all products shown are in euro")
     public void allProductsShownAreInEuro() {
         List<WebElement> itemsPrice = driver.findElements(By.xpath("//div[@class=\"prices\"]/span"));
-        String firstItemPrice = itemsPrice.get(0).getText();
-        Assert.assertTrue(firstItemPrice.contains("€"));
+        for(WebElement item : itemsPrice) {
+            String itemPrice = item.getText();
+            Assert.assertTrue(itemPrice.contains("€"));
+        }
+
     }
 }
